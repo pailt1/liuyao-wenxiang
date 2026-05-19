@@ -1,0 +1,9 @@
+{
+  "name": "analyze-hexagram",
+  "version": "1.0.0",
+  "description": "六爻问象 AI 解卦云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

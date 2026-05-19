@@ -1,0 +1,276 @@
+.home-hero {
+  position: relative;
+  z-index: 1;
+  min-height: 430rpx;
+  padding-top: 22rpx;
+  text-align: center;
+}
+
+.home-hero::before,
+.home-hero::after {
+  content: "";
+  position: absolute;
+  height: 38rpx;
+  border-top: 4rpx solid rgba(196, 154, 69, 0.22);
+  border-radius: 999rpx;
+}
+
+.home-hero::before {
+  top: 142rpx;
+  left: -6rpx;
+  width: 170rpx;
+}
+
+.home-hero::after {
+  top: 232rpx;
+  right: 10rpx;
+  width: 210rpx;
+}
+
+.bagua-mark {
+  position: relative;
+  width: 230rpx;
+  height: 230rpx;
+  margin: 0 auto 30rpx;
+}
+
+.bagua-ring {
+  position: absolute;
+  inset: 0;
+  border: 2rpx dashed rgba(196, 154, 69, 0.42);
+  border-radius: 50%;
+}
+
+.taiji {
+  position: absolute;
+  top: 53rpx;
+  left: 53rpx;
+  width: 124rpx;
+  height: 124rpx;
+  overflow: hidden;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #fffdf8 0 50%, #b8872b 50% 100%);
+  box-shadow: 0 10rpx 22rpx rgba(184, 135, 43, 0.18);
+}
+
+.taiji::before,
+.taiji::after {
+  content: "";
+  position: absolute;
+  left: 31rpx;
+  width: 62rpx;
+  height: 62rpx;
+  border-radius: 50%;
+}
+
+.taiji::before {
+  top: 0;
+  background: #fffdf8;
+}
+
+.taiji::after {
+  bottom: 0;
+  background: #b8872b;
+}
+
+.taiji-dot {
+  position: absolute;
+  z-index: 1;
+  left: 55rpx;
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+}
+
+.taiji-dot-light {
+  top: 24rpx;
+  background: #b8872b;
+}
+
+.taiji-dot-dark {
+  bottom: 24rpx;
+  background: #fffdf8;
+}
+
+.gua {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 48rpx;
+  height: 38rpx;
+}
+
+.gua-line {
+  width: 48rpx;
+  height: 6rpx;
+  border-radius: 6rpx;
+  background: rgba(169, 120, 31, 0.74);
+}
+
+.gua-yin {
+  display: flex;
+  justify-content: space-between;
+  background: transparent;
+}
+
+.gua-yin view {
+  width: 19rpx;
+  height: 6rpx;
+  border-radius: 6rpx;
+  background: rgba(169, 120, 31, 0.74);
+}
+
+.gua-qian {
+  top: 16rpx;
+  left: 91rpx;
+  transform: rotate(0deg);
+}
+
+.gua-dui {
+  top: 44rpx;
+  right: 34rpx;
+  transform: rotate(45deg);
+}
+
+.gua-li {
+  top: 96rpx;
+  right: 12rpx;
+  transform: rotate(90deg);
+}
+
+.gua-zhen {
+  right: 34rpx;
+  bottom: 44rpx;
+  transform: rotate(135deg);
+}
+
+.gua-kun {
+  bottom: 16rpx;
+  left: 91rpx;
+  transform: rotate(0deg);
+}
+
+.gua-gen {
+  bottom: 44rpx;
+  left: 34rpx;
+  transform: rotate(45deg);
+}
+
+.gua-kan {
+  top: 96rpx;
+  left: 12rpx;
+  transform: rotate(90deg);
+}
+
+.gua-xun {
+  top: 44rpx;
+  left: 34rpx;
+  transform: rotate(135deg);
+}
+
+.title-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18rpx;
+}
+
+.seal {
+  display: flex;
+  flex: 0 0 46rpx;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 46rpx;
+  height: 76rpx;
+  margin-top: 2rpx;
+  border-radius: 22rpx;
+  background: #a33a2a;
+  color: #fffdf8;
+  font-size: 22rpx;
+  line-height: 1;
+}
+
+.seal text {
+  display: block;
+  height: 24rpx;
+  line-height: 24rpx;
+}
+
+.home-title {
+  display: block;
+  color: #211814;
+  font-size: 72rpx;
+  font-weight: 800;
+  letter-spacing: 8rpx;
+  line-height: 1.1;
+}
+
+.home-subtitle {
+  display: block;
+  margin-top: 20rpx;
+  color: #8a7c6a;
+  font-size: 32rpx;
+  letter-spacing: 5rpx;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24rpx;
+  margin-bottom: 18rpx;
+}
+
+.section-heading .section-title {
+  margin-bottom: 0;
+}
+
+.question-input {
+  width: 100%;
+  min-height: 230rpx;
+  padding: 26rpx;
+  border: 1rpx solid #e8ddcb;
+  border-radius: 20rpx;
+  background: rgba(255, 253, 248, 0.86);
+  color: #211814;
+  font-size: 30rpx;
+  line-height: 1.6;
+}
+
+.input-count {
+  display: block;
+  color: #8a8173;
+  text-align: right;
+  font-size: 24rpx;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.category-item {
+  min-width: 130rpx;
+  padding: 14rpx 22rpx;
+  border: 1rpx solid #e8ddcb;
+  border-radius: 999rpx;
+  background: rgba(255, 253, 248, 0.58);
+  color: #2b211b;
+  text-align: center;
+  font-size: 28rpx;
+}
+
+.category-active {
+  border-color: #b8872b;
+  background: rgba(184, 135, 43, 0.12);
+  color: #a9781f;
+  font-weight: 600;
+}
+
+.history-button {
+  margin-top: 18rpx;
+}

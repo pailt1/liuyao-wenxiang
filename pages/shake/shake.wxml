@@ -1,0 +1,78 @@
+<view class="page shake-page">
+  <text class="page-title">摇卦中</text>
+
+  <view class="question-panel section">
+    <view class="question-icon">问</view>
+    <view class="question-content">
+      <text class="question-label">我的问题</text>
+      <text class="question-text">{{question}}</text>
+      <text class="question-meta">{{category}}</text>
+    </view>
+  </view>
+
+  <view class="shake-stage">
+    <text class="stage-title">第 <text class="stage-number">{{isComplete ? 6 : nextLineIndex}}</text> / 6 爻</text>
+    <text class="stage-subtitle">{{isComplete ? '六爻已成，请查看结果' : '请静心默念问题'}}</text>
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{progressPercent}}%;"></view>
+    </view>
+  </view>
+
+  <view class="coin-panel">
+    <view class="coin-header">
+      <text class="coin-title">三枚硬币</text>
+      <text class="coin-step">{{isShaking ? '摇动中' : nextLineLabel}}</text>
+    </view>
+    <view class="coin-ripple"></view>
+    <view class="coin-tray">
+      <view
+        wx:for="{{currentCoins}}"
+        wx:key="id"
+        class="coin coin-{{item.side}} {{isShaking ? 'coin-shaking' : ''}}"
+      >
+        <text class="coin-face">{{item.shortLabel}}</text>
+      </view>
+    </view>
+    <text class="coin-summary">{{lastShakeText}}</text>
+  </view>
+
+  <view class="section line-card">
+    <view class="line-card-title">
+      <text class="section-title">六爻生成</text>
+      <text class="line-card-subtitle">从下往上</text>
+    </view>
+    <view class="line-list">
+      <view
+        wx:for="{{displayLines}}"
+        wx:key="index"
+        class="line-item {{item.empty ? 'line-empty' : 'line-done'}} {{item.index == nextLineIndex && !isComplete ? 'line-current' : ''}}"
+      >
+        <text class="line-position">{{item.position}}（第{{item.index}}爻）</text>
+        <view class="line-symbol">
+          <view wx:if="{{item.empty}}" class="empty-symbol"></view>
+          <view wx:elif="{{item.type == 'yang'}}" class="yang-symbol"></view>
+          <view wx:else class="yin-symbol">
+            <view class="yin-segment"></view>
+            <view class="yin-segment"></view>
+          </view>
+        </view>
+        <view class="line-status">
+          <text wx:if="{{!item.empty}}" class="status-done">已生成</text>
+          <text wx:elif="{{item.index == nextLineIndex && !isComplete}}" class="status-current">正在生成</text>
+          <text wx:else class="status-empty">未生成</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <button class="primary-button" bindtap="shakeOnce" disabled="{{isComplete || isShaking}}">
+    {{isComplete ? '六爻已完成' : (isShaking ? '正在摇卦' : '继续摇卦')}}
+  </button>
+  <button class="secondary-button" bindtap="resetShake">重新开始</button>
+  <button class="secondary-button" bindtap="goToResult">查看结果</button>
+
+  <view class="tip-bar">
+    <text class="tip-icon">卦</text>
+    <text>六爻从下往上生成，初爻在最下，上爻在最上</text>
+  </view>
+</view>

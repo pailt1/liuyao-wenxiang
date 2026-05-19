@@ -1,0 +1,20 @@
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies and build caches
+node_modules/
+web/h5/node_modules/
+
+# Local development output
+*.log
+.dev-server.*.log
+web/h5/.dev-server.*.log
+
+# Hosting and tooling local state
+.netlify/
+web/h5/.netlify/
+
+# WeChat DevTools user-specific settings
+project.private.config.json

@@ -1,0 +1,60 @@
+<view class="page history-page">
+  <text class="page-title">历史记录</text>
+  <view class="title-divider">
+    <view></view>
+    <text>☯</text>
+    <view></view>
+  </view>
+
+  <view class="filter-card">
+    <view class="filter-list">
+      <text
+        wx:for="{{filters}}"
+        wx:key="*this"
+        data-filter="{{item}}"
+        class="filter-item {{selectedFilter == item ? 'filter-active' : ''}}"
+        bindtap="selectFilter"
+      >{{item}}</text>
+    </view>
+    <text class="filter-action">筛选</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="state-box">正在读取历史记录...</view>
+  <view wx:elif="{{errorText}}" class="error-box">{{errorText}}</view>
+  <view wx:elif="{{!filteredRecords.length}}" class="state-box">
+    <text class="empty-title">暂无历史记录</text>
+    <text class="empty-desc">完成一次摇卦并进入结果页后，会自动保存到这里。</text>
+  </view>
+
+  <view wx:else class="history-list">
+    <view
+      wx:for="{{filteredRecords}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      class="history-item"
+      bindtap="goToDetail"
+    >
+      <view class="history-badge">
+        <text class="badge-icon">册</text>
+        <text class="badge-text">{{item.category}}</text>
+      </view>
+      <view class="history-main">
+        <view class="history-topline">
+          <text class="history-question">{{item.question}}</text>
+          <text class="detail-link">查看详情 ›</text>
+        </view>
+        <text class="history-meta">{{item.createdAt}}</text>
+        <view class="history-hexagram">
+          <text class="hex-mini">☷</text>
+          <text class="history-name">{{item.originalHexagramName}}</text>
+          <text class="arrow">→</text>
+          <text class="hex-mini">☰</text>
+          <text class="history-change">{{item.changedHexagramName}}</text>
+        </view>
+        <text class="history-moving">{{item.movingLinesText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <button class="primary-button floating-action" bindtap="goHome">重新起卦</button>
+</view>

@@ -1,0 +1,14 @@
+{
+  "name": "liuyai-wenxiang-h5",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server/local.js",
+    "start": "node server/local.js",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,80 @@
+<view class="page detail-page">
+  <text class="page-title">记录详情</text>
+
+  <view wx:if="{{loading}}" class="state-box">正在读取历史详情...</view>
+  <view wx:elif="{{errorText}}" class="error-box">{{errorText}}</view>
+
+  <view wx:if="{{record}}">
+    <view class="section summary-card">
+      <view class="summary-icon">问</view>
+      <view class="summary-content">
+        <text class="question-text">{{record.question}}</text>
+        <view class="summary-meta-row">
+          <text>问题类型：{{record.category}}</text>
+          <text>起卦时间：{{record.createdAt}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section compare-card">
+      <view class="hex-side">
+        <text class="hex-label">本卦</text>
+        <text class="hex-name">{{record.originalHexagram.name}}</text>
+        <text class="hex-meta">上{{record.originalHexagram.upperTrigram.name}}下{{record.originalHexagram.lowerTrigram.name}}</text>
+      </view>
+      <view class="change-seal">
+        <text>变</text>
+        <text class="moving-mini">动爻：{{record.movingLinesText}}</text>
+      </view>
+      <view class="hex-side">
+        <text class="hex-label">变卦</text>
+        <text class="hex-name">{{record.changedHexagram.name}}</text>
+        <text class="hex-meta">上{{record.changedHexagram.upperTrigram.name}}下{{record.changedHexagram.lowerTrigram.name}}</text>
+      </view>
+    </view>
+
+    <view class="section line-card">
+      <text class="section-title">六爻图形</text>
+      <view class="line-list">
+        <view
+          wx:for="{{displayLines}}"
+          wx:key="index"
+          class="line-item {{item.moving ? 'line-moving' : ''}}"
+        >
+          <text class="line-position">{{item.position}}</text>
+          <view class="line-symbol">
+            <view wx:if="{{item.type == 'yang'}}" class="yang-symbol"></view>
+            <view wx:else class="yin-symbol">
+              <view class="yin-segment"></view>
+              <view class="yin-segment"></view>
+            </view>
+          </view>
+          <text wx:if="{{item.moving}}" class="moving-dot"></text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section ai-section">
+      <text class="section-title">AI 解读</text>
+      <view
+        wx:for="{{record.aiSections}}"
+        wx:key="title"
+        class="ai-item"
+      >
+        <view class="analysis-icon">{{index + 1}}</view>
+        <view class="analysis-body">
+          <text class="ai-title">{{item.title}}</text>
+          <text class="ai-content">{{item.content}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="detail-actions">
+      <button class="secondary-button action-button" bindtap="goHome">再次起卦</button>
+      <button class="secondary-button action-button" bindtap="copyRecordText">复制文本</button>
+      <button class="secondary-button action-button delete-button" bindtap="deleteRecord">删除记录</button>
+    </view>
+  </view>
+
+  <view class="disclaimer">{{disclaimer}}</view>
+</view>

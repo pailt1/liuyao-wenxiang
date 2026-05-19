@@ -1,0 +1,93 @@
+<view class="page result-page">
+  <text class="page-title">解卦结果</text>
+
+  <view class="section summary-card">
+    <view class="summary-icon">问</view>
+    <view class="summary-content">
+      <text class="question-text">{{question}}</text>
+      <text class="muted">问题类型：{{category}}</text>
+      <text class="muted">起卦时间：{{createdAt}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{errorText}}" class="error-box">{{errorText}}</view>
+
+  <view wx:if="{{hasHexagram}}" class="section plate-card">
+    <view class="plate-lines">
+      <view
+        wx:for="{{displayLines}}"
+        wx:key="index"
+        class="plate-line {{item.moving ? 'plate-line-moving' : ''}}"
+      >
+        <text class="plate-position">{{item.position}}</text>
+        <view class="line-symbol">
+          <view wx:if="{{item.type == 'yang'}}" class="yang-symbol"></view>
+          <view wx:else class="yin-symbol">
+            <view class="yin-segment"></view>
+            <view class="yin-segment"></view>
+          </view>
+        </view>
+        <text wx:if="{{item.moving}}" class="moving-dot"></text>
+      </view>
+    </view>
+
+    <view class="plate-info">
+      <view class="plate-info-row">
+        <text class="plate-label">本卦</text>
+        <text class="plate-value">{{originalHexagram.name}}</text>
+        <text class="plate-meta">上{{originalHexagram.upperTrigram.name}}下{{originalHexagram.lowerTrigram.name}}</text>
+      </view>
+      <view class="plate-info-row">
+        <text class="plate-label">变卦</text>
+        <text class="plate-value">{{changedHexagram.name}}</text>
+        <text class="plate-meta">上{{changedHexagram.upperTrigram.name}}下{{changedHexagram.lowerTrigram.name}}</text>
+      </view>
+      <view class="plate-info-row">
+        <text class="plate-label">动爻</text>
+        <text class="plate-value moving-text">{{movingLinesText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section conclusion-card">
+    <view class="ai-header">
+      <text class="section-title">AI 结论</text>
+      <text wx:if="{{aiSource}}" class="ai-source">{{aiSource == 'ai' ? 'AI 生成' : '兜底参考'}}</text>
+    </view>
+    <view wx:if="{{aiLoading}}" class="ai-loading">正在根据程序排盘结果生成解读...</view>
+    <view wx:elif="{{aiConclusion}}" class="conclusion-content">
+      <text>{{aiConclusion.content}}</text>
+    </view>
+    <view wx:else class="ai-loading">完成排盘后展示 AI 解读。</view>
+    <text wx:if="{{aiErrorText}}" class="ai-error">{{aiErrorText}}</text>
+  </view>
+
+  <view wx:if="{{aiAnalysisSections.length}}" class="analysis-list">
+    <view
+      wx:for="{{aiAnalysisSections}}"
+      wx:key="title"
+      class="section ai-item"
+    >
+      <view class="analysis-icon">{{index + 1}}</view>
+      <view class="analysis-body">
+        <text class="ai-title">{{item.title}}</text>
+        <text class="ai-content">{{item.content}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="action-row">
+    <button class="secondary-button action-button" bindtap="saveRecordManually">{{recordId ? '已保存' : '保存记录'}}</button>
+    <button class="primary-button action-button" open-type="share">分享结果</button>
+  </view>
+  <button class="secondary-button ghost-button" bindtap="goHome">重新起卦</button>
+
+  <view wx:if="{{recordSaveText}}" class="save-status save-status-{{recordSaveStatus}}">
+    <text>{{recordSaveText}}</text>
+  </view>
+
+  <button wx:if="{{recordId}}" class="secondary-button ghost-button" bindtap="goToDetail">查看历史详情</button>
+  <button class="secondary-button ghost-button" bindtap="goToHistory">历史记录</button>
+
+  <view class="disclaimer">{{disclaimer}}</view>
+</view>

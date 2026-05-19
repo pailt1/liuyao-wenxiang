@@ -1,0 +1,9 @@
+{
+  "name": "get-history",
+  "version": "1.0.0",
+  "description": "获取六爻问象历史记录列表",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

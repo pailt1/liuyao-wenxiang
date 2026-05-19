@@ -1,0 +1,99 @@
+<view class="page index-page">
+  <view class="home-hero">
+    <view class="bagua-mark">
+      <view class="bagua-ring"></view>
+      <view class="taiji">
+        <view class="taiji-dot taiji-dot-light"></view>
+        <view class="taiji-dot taiji-dot-dark"></view>
+      </view>
+      <view class="gua gua-qian">
+        <view class="gua-line gua-yang"></view>
+        <view class="gua-line gua-yang"></view>
+        <view class="gua-line gua-yang"></view>
+      </view>
+      <view class="gua gua-dui">
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+        <view class="gua-line gua-yang"></view>
+        <view class="gua-line gua-yang"></view>
+      </view>
+      <view class="gua gua-li">
+        <view class="gua-line gua-yang"></view>
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+        <view class="gua-line gua-yang"></view>
+      </view>
+      <view class="gua gua-zhen">
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+        <view class="gua-line gua-yang"></view>
+      </view>
+      <view class="gua gua-kun">
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+      </view>
+      <view class="gua gua-gen">
+        <view class="gua-line gua-yang"></view>
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+      </view>
+      <view class="gua gua-kan">
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+        <view class="gua-line gua-yang"></view>
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+      </view>
+      <view class="gua gua-xun">
+        <view class="gua-line gua-yang"></view>
+        <view class="gua-line gua-yang"></view>
+        <view class="gua-line gua-yin"><view></view><view></view></view>
+      </view>
+    </view>
+    <view class="title-row">
+      <text class="home-title">六爻问象</text>
+      <view class="seal">
+        <text>六</text>
+        <text>爻</text>
+      </view>
+    </view>
+    <text class="home-subtitle">电子摇卦，静心观象</text>
+  </view>
+
+  <view class="section question-card">
+    <view class="section-heading">
+      <text class="section-title">请输入你想问的问题</text>
+      <text class="input-count">{{questionLength}}/120</text>
+    </view>
+    <textarea
+      class="question-input"
+      value="{{question}}"
+      maxlength="120"
+      auto-height
+      placeholder="例如：我该不该接受这个新机会？"
+      bindinput="onQuestionInput"
+    />
+  </view>
+
+  <view class="section category-card">
+    <view class="section-heading">
+      <text class="section-title">问题类型</text>
+    </view>
+    <view class="category-list">
+      <text
+        wx:for="{{categories}}"
+        wx:key="*this"
+        data-index="{{index}}"
+        class="category-item {{selectedCategoryIndex == index ? 'category-active' : ''}}"
+        bindtap="selectCategory"
+      >{{item}}</text>
+    </view>
+  </view>
+
+  <view class="tip-bar">
+    <text class="tip-icon">♧</text>
+    <text>一事一问，静心起卦；程序负责排盘，AI辅助解读</text>
+  </view>
+
+  <button class="primary-button" bindtap="goToShake">开始摇卦</button>
+  <button class="secondary-button history-button" bindtap="goToHistory">查看历史记录</button>
+
+  <view class="disclaimer">{{disclaimer}}</view>
+</view>

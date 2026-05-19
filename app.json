@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/shake/shake",
+    "pages/result/result",
+    "pages/history/history",
+    "pages/detail/detail"
+  ],
+  "window": {
+    "navigationBarTitleText": "六爻问象",
+    "navigationBarBackgroundColor": "#f7f1e3",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f1e3",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
