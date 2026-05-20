@@ -1,0 +1,10 @@
+[build]
+  base = "web/h5"
+  command = "npm test"
+  publish = "public"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/chat"
+  to = "/.netlify/functions/chat"
+  status = 200
