@@ -47,19 +47,3 @@ test('AI sections are normalized and absolute wording is sanitized', () => {
   assert.ok(!normalized[0].content.includes('一定失败'))
   assert.ok(normalized.at(-1).content.includes(DISCLAIMER))
 })
-
-test('invalid optional DeepSeek URL falls back to the official endpoint', () => {
-  const originalUrl = process.env.DEEPSEEK_API_URL
-
-  process.env.DEEPSEEK_API_URL = 'api.deepseek.com/chat/completions'
-  assert.equal(_private.getDeepSeekApiUrl(), 'https://api.deepseek.com/chat/completions')
-
-  process.env.DEEPSEEK_API_URL = 'https://example.com/custom'
-  assert.equal(_private.getDeepSeekApiUrl(), 'https://example.com/custom')
-
-  if (originalUrl === undefined) {
-    delete process.env.DEEPSEEK_API_URL
-  } else {
-    process.env.DEEPSEEK_API_URL = originalUrl
-  }
-})

@@ -240,26 +240,6 @@ function buildModelPayload(input, plate) {
   }
 }
 
-function getDeepSeekApiUrl() {
-  const configuredUrl = String(process.env.DEEPSEEK_API_URL || '').trim()
-
-  if (!configuredUrl) {
-    return DEFAULT_DEEPSEEK_API_URL
-  }
-
-  try {
-    const url = new URL(configuredUrl)
-
-    if (url.protocol === 'http:' || url.protocol === 'https:') {
-      return url.toString()
-    }
-  } catch (error) {
-    return DEFAULT_DEEPSEEK_API_URL
-  }
-
-  return DEFAULT_DEEPSEEK_API_URL
-}
-
 async function requestDeepSeek(input, plate) {
   const apiKey = process.env.DEEPSEEK_API_KEY
 
@@ -271,7 +251,7 @@ async function requestDeepSeek(input, plate) {
   const timeout = setTimeout(() => controller.abort(), 30000)
 
   try {
-    const response = await fetch(getDeepSeekApiUrl(), {
+    const response = await fetch(DEFAULT_DEEPSEEK_API_URL, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -369,7 +349,6 @@ export const _private = {
   buildLines,
   buildModelPayload,
   createFallbackSections,
-  getDeepSeekApiUrl,
   normalizeSections,
   parseModelContent
 }
