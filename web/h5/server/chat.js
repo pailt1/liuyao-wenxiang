@@ -1,10 +1,10 @@
-import { readFile } from 'node:fs/promises'
 import {
   buildDisplayLines,
   calculateHexagram,
   createLineFromScore,
   loadHexagramData
 } from '../public/shared/hexagram.js'
+import HEXAGRAM_DATA from './hexagram-data.js'
 
 export const DISCLAIMER = '仅供传统文化学习与自我反思参考'
 
@@ -55,8 +55,7 @@ let hexagramDataPromise = null
 
 async function ensureHexagramData() {
   if (!hexagramDataPromise) {
-    hexagramDataPromise = readFile(new URL('../public/shared/hexagrams.json', import.meta.url), 'utf8')
-      .then((raw) => loadHexagramData(JSON.parse(raw)))
+    hexagramDataPromise = Promise.resolve(loadHexagramData(HEXAGRAM_DATA))
   }
 
   return hexagramDataPromise
