@@ -55,7 +55,9 @@ let hexagramDataPromise = null
 
 async function ensureHexagramData() {
   if (!hexagramDataPromise) {
-    hexagramDataPromise = Promise.resolve(loadHexagramData(HEXAGRAM_DATA))
+    const data = HEXAGRAM_DATA && HEXAGRAM_DATA.default ? HEXAGRAM_DATA.default : HEXAGRAM_DATA
+
+    hexagramDataPromise = Promise.resolve(loadHexagramData(data))
   }
 
   return hexagramDataPromise

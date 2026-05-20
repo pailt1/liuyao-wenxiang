@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { DISCLAIMER, REQUIRED_SECTION_TITLES, handleChatRequest, _private } from '../server/chat.js'
+import HEXAGRAM_DATA from '../server/hexagram-data.js'
 
 const sampleBody = {
   question: '我该不该接受这个新机会？',
@@ -34,6 +35,11 @@ test('/api/chat backend computes plate and returns fallback without DEEPSEEK_API
   if (originalKey) {
     process.env.DEEPSEEK_API_KEY = originalKey
   }
+})
+
+test('bundled server hexagram data has the expected shape', () => {
+  assert.equal(Object.keys(HEXAGRAM_DATA.trigrams).length, 8)
+  assert.equal(Object.keys(HEXAGRAM_DATA.hexagrams).length, 64)
 })
 
 test('AI sections are normalized and absolute wording is sanitized', () => {
