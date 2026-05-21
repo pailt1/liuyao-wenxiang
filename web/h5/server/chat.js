@@ -46,6 +46,9 @@ const SYSTEM_PROMPT = [
   '6. 语气要清晰、直接、克制，不恐吓用户，不制造焦虑。',
   `7. 输出必须包含：${REQUIRED_SECTION_TITLES.join('、')}。`,
   `8. 免责声明必须包含“${DISCLAIMER}”。`,
+  '9. 必须根据本次输入的本卦、变卦、动爻、六爻结构给出差异化分析，不允许只按问题类型套用通用答案。',
+  '10. 如果同一个问题对应不同卦象，结论、趋势和行动建议必须体现卦象差异。',
+  '11. 直接结论必须点名本卦、变卦或动爻中的至少两个具体信息。',
   '',
   '请只返回 JSON，不要返回 Markdown。JSON 结构：',
   '{"sections":[{"title":"直接结论","content":"..."},{"title":"卦象识别","content":"..."}]}'
@@ -105,23 +108,57 @@ function buildLines(lines) {
 
 function formatLines(lines) {
   return lines.map((line) => {
-    return `${line.position}：${line.name}，${line.image}${line.moving ? '，动爻' : ''}`
+    const score = typeof line.score === 'number' ? `，点数${line.score}` : ''
+    const moving = line.moving ? '，动爻' : '，静爻'
+    const coins = line.coinText ? `，硬币：${line.coinText}` : ''
+
+    return `${line.position}（第${line.index}爻）：${line.name}，${line.image}${score}${moving}${coins}`
   }).join('\n')
 }
 
 function buildUserPrompt(input, plate) {
+  const original = plate.originalHexagram
+  const changed = plate.changedHexagram
+  const changedLines = plate.changedLinesFromBottom
+  const changedLineText = changedLines.map((line) => {
+    const changedFrom = line.changedFrom ? `，由${line.changedFrom === 'yin' ? '阴' : '阳'}变来` : ''
+
+    return `${line.position}：${line.name}，${line.image}${changedFrom}`
+  }).join('\n')
+
   return [
     '请根据以下六爻排盘数据进行分析：',
     '',
     `用户问题：${input.question}`,
     `问题类型：${input.category}`,
     `起卦时间：${input.createdAt}`,
-    `本卦：${plate.originalHexagram.displayName}`,
-    `变卦：${plate.changedHexagram.displayName}`,
+    '',
+    '本卦（程序计算结果，必须以此为准）：',
+    `名称：${original.displayName}`,
+    `编码：${plate.originalCode}`,
+    `上卦：${original.upperTrigram.name}（${original.upperTrigram.symbol}，${original.upperTrigram.nature}）`,
+    `下卦：${original.lowerTrigram.name}（${original.lowerTrigram.symbol}，${original.lowerTrigram.nature}）`,
+    '',
+    '变卦（程序计算结果，必须以此为准）：',
+    `名称：${changed.displayName}`,
+    `编码：${plate.changedCode}`,
+    `上卦：${changed.upperTrigram.name}（${changed.upperTrigram.symbol}，${changed.upperTrigram.nature}）`,
+    `下卦：${changed.lowerTrigram.name}（${changed.lowerTrigram.symbol}，${changed.lowerTrigram.nature}）`,
+    '',
     `动爻：${plate.movingLinesText}`,
     '',
     '六爻自下而上：',
     formatLines(plate.linesFromBottom),
+    '',
+    '变化后的六爻自下而上：',
+    changedLineText,
+    '',
+    '本次解读的差异化要求：',
+    '- 先判断本卦呈现的当前状态，再判断变卦呈现的变化方向；',
+    '- 动爻必须逐条解释，说明它为什么会影响本题；',
+    '- 结论和建议必须引用本卦名、变卦名、动爻位置中的具体信息；',
+    '- 不要输出可以套用于任意卦象的泛泛建议；',
+    '- 如果无动爻，要明确说明“无动爻”代表本卦与变卦一致，重在守势与现状观察；',
     '',
     '请按照以下结构输出：',
     REQUIRED_SECTION_TITLES.map((title, index) => `${index + 1}. ${title}`).join('\n'),
@@ -132,6 +169,7 @@ function buildUserPrompt(input, plate) {
     '- 不要恐吓用户；',
     '- 要结合现实条件分析；',
     '- 语言要像一个懂六爻但很理性的朋友；',
+    '- 每一节都要尽量体现本次卦象的具体差异；',
     '- 只返回 JSON。'
   ].join('\n')
 }
@@ -232,7 +270,7 @@ function parseModelContent(content) {
 function buildModelPayload(input, plate) {
   return {
     model: process.env.DEEPSEEK_MODEL || DEFAULT_DEEPSEEK_MODEL,
-    temperature: 0.4,
+    temperature: 0.55,
     response_format: { type: 'json_object' },
     messages: [
       { role: 'system', content: SYSTEM_PROMPT },

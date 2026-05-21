@@ -44,11 +44,11 @@ const state = {
 
 function escapeHtml(value) {
   return String(value || '')
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
 }
 
 function formatDate(date) {
@@ -653,6 +653,20 @@ function currentRecordForShare() {
   return state.records.find((record) => record.id === state.savedRecordId)
 }
 
+function closestElement(target, selector) {
+  let element = target && target.nodeType === 1 ? target : target.parentElement
+
+  while (element && element !== document) {
+    if (element.matches && element.matches(selector)) {
+      return element
+    }
+
+    element = element.parentElement
+  }
+
+  return null
+}
+
 document.addEventListener('input', (event) => {
   if (event.target.id !== 'questionInput') {
     return
@@ -667,7 +681,7 @@ document.addEventListener('input', (event) => {
 })
 
 document.addEventListener('click', async (event) => {
-  const categoryButton = event.target.closest('[data-category-index]')
+  const categoryButton = closestElement(event.target, '[data-category-index]')
 
   if (categoryButton) {
     state.selectedCategoryIndex = Number(categoryButton.dataset.categoryIndex)
@@ -675,7 +689,7 @@ document.addEventListener('click', async (event) => {
     return
   }
 
-  const filterButton = event.target.closest('[data-history-filter]')
+  const filterButton = closestElement(event.target, '[data-history-filter]')
 
   if (filterButton) {
     state.historyFilter = filterButton.dataset.historyFilter
@@ -683,7 +697,7 @@ document.addEventListener('click', async (event) => {
     return
   }
 
-  const button = event.target.closest('[data-action]')
+  const button = closestElement(event.target, '[data-action]')
 
   if (!button) {
     return
